@@ -25,11 +25,19 @@ been reported, on Saturday 21 November 2026:
   Japan to "correct" its Taiwan words; **make.fun opening this very
   contest at 00:00 UTC, $100 USDC escrowed at 01:56:50 UTC**; Denmark
   expelling Russia's defence attache.
-- **22 briefs (14–35)** across Europe, the Americas, Africa, the Middle
+- **2 more drawn features in a third row (14–15):** the Houthis
+  threatening Jeddah and Red Sea ports (a port at dusk under a missile
+  streak); Iran keeping its 60% uranium, the IAEA counting 440.9 kg
+  (a centrifuge hall). The third row also holds the numbered world map
+  (two columns wide) and the red **DATE CHECK** box (one column wide).
+- **20 briefs (16–35)** across Europe, the Americas, Africa, the Middle
   East, Asia and Oceania.
 - **Region strip** (Europe 5, Asia 9, Middle East 4, Africa 1, Americas
   11, Oceania 3, Global 2 — sums to 35), a 6-number stat strip, a
-  numbered world map for the 11 located stories, and a red **DATE CHECK**
+  numbered world map for the 11 located stories — Natural Earth
+  coastlines drawn with one true scale for longitude and latitude, so
+  every continent keeps its real shape, with a clear lat/lon grid and
+  the Great Lakes shown — and a red **DATE CHECK**
   box naming the 20-November items that are *not* today's news (Wall
   Street correction, Kyiv bridges barrage, Poland missile, UK–EU deal,
   Cyclone Akvan, ICJ Myanmar ruling, Voyager 1 light-day) plus what had
@@ -41,13 +49,18 @@ been reported, on Saturday 21 November 2026:
   Story 7 (BepiColombo) is a scheduled event; stories 9 and 14 are
   claims, not confirmed facts.
 
-All 13 illustrations are code-drawn vector-style charts, maps and
-diagrams — no photos. Body text is 11–12 px. The image is 421,451 bytes
+All 13 illustrations are code-drawn, shaded and detailed — realistic
+renderings of the real scenes (a negotiation table, a night skyline
+under missile defence, shaking buildings, an airliner, a metallic
+coin, a batsman at the crease, a probe at Mercury, a broken bridge, a
+drone over the strait, server racks, the two flags, the make.fun ghost,
+the Dannebrog, a Red Sea port under a missile streak, a centrifuge
+hall) — no photos. Body text is 9–12 px. The image is 399,556 bytes
 (1024×1024 RGB), drawn deterministically: two runs are byte-identical.
 
 ## Files
 
-- `entry.png` — the image (1024×1024 RGB, 421,451 bytes)
+- `entry.png` — the image (1024×1024 RGB, 399,556 bytes)
 - `generate.py` — the Pillow program that draws it (deterministic)
 - `main.py` — the entrypoint: copies `entry.png` to
   `$MAKEFUN_OUTPUT_DIR/entry.png` (stdlib only)
