@@ -55,12 +55,12 @@ under missile defence, shaking buildings, an airliner, a metallic
 coin, a batsman at the crease, a probe at Mercury, a broken bridge, a
 drone over the strait, server racks, the two flags, the make.fun ghost,
 the Dannebrog, a Red Sea port under a missile streak, a centrifuge
-hall) — no photos. Body text is 9–12 px. The image is 399,556 bytes
+hall) — no photos. Body text is 9–12 px. The image is 399,158 bytes
 (1024×1024 RGB), drawn deterministically: two runs are byte-identical.
 
 ## Files
 
-- `entry.png` — the image (1024×1024 RGB, 399,556 bytes)
+- `entry.png` — the image (1024×1024 RGB, 399,158 bytes)
 - `generate.py` — the Pillow program that draws it (deterministic)
 - `main.py` — the entrypoint: copies `entry.png` to
   `$MAKEFUN_OUTPUT_DIR/entry.png` (stdlib only)

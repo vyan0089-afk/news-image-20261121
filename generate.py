@@ -49,20 +49,20 @@ REGIONS = [("EUROPE", "EU", RED), ("ASIA", "AS", BLUE),
 REG_COL = {c: col for _, c, col in REGIONS}
 REG_NAME = {c: n for n, c, _ in REGIONS}
 
-# (num, region, headline, summary, source, label)
-# Labels: CONFIRMED verified · OFFICIAL stated by an authority ·
-# REPORTED reported, not yet independently verified · CLAIM one side's
-# claim · FORECAST still to happen.
+# (num, region, banner, headline, summary, source, label)
+# Heroes carry a caps banner (topic) PLUS a sentence-case news headline,
+# like the top 3: the banner names the topic, the headline tells the news
+# at a glance. Summaries are unchanged.
 HEROES = [
- (1, "EU", "COP31 IN OVERTIME: NO DEAL",
+ (1, "EU", "COP31: OVERTIME", "Climate summit runs into Saturday with no deal",
   "Antalya talks run past their Friday close into day 13; the draft drops "
   "all fossil-fuel wording and a third text is due Saturday morning.",
   "AP; Reuters", "CONFIRMED"),
- (2, "ME", "THREE MISSILES DOWN OVER RIYADH",
+ (2, "ME", "SAUDI: MISSILES", "Five Houthi missiles shot down over Saudi Arabia",
   "Saudi defences destroy three Houthi ballistic missiles aimed at the "
   "capital in the early hours; two more were stopped over Jizan on Friday.",
   "Saudi Press Agency", "CONFIRMED"),
- (3, "AM", "PERU SHAKEN BY 6.7 QUAKE",
+ (3, "AM", "PERU: QUAKE 6.7", "Magnitude 6.7 earthquake shakes central Peru",
   "A deep quake strikes Junin at 00:09 UTC, 108 km down, and is felt in "
   "Lima; homes damaged, power cut, but no deaths reported.",
   "USGS", "CONFIRMED"),
@@ -74,7 +74,7 @@ FEATURES = [
   "137 passengers and 9 crew slide out unhurt.",
   "CAAP; AP", "CONFIRMED"),
  (5, "GL", "BITCOIN SINKS BELOW $60,000",
-  "Bitcoin falls to about $58,200 at midday UTC, its lowest since September "
+  "Bitcoin slips to $58,983 early Saturday, its lowest since September "
   "2024, as the AI sell-off spreads to crypto.",
   "Finnhub; Reuters", "CONFIRMED"),
  (6, "OC", "RAHUL 136 AS INDIA TAKE CHARGE",
@@ -86,8 +86,8 @@ FEATURES = [
   "for a 37-minute burn to be captured by Mercury's gravity.",
   "ESA", "FORECAST"),
  (8, "EU", "ZELENSKY: CRIMEA BRIDGE 'WILL NOT STAY'",
-  "Ukraine's president says the bridge is a legitimate target and warns "
-  "Russia it will not survive, in an NBC interview.",
+  "The bridge is a legitimate target, Ukraine's president tells NBC in an "
+  "interview reported on 21 Nov, warning Russia it will not survive.",
   "NBC; United24", "REPORTED"),
  (9, "ME", "IRAN CLAIMS US DRONE DOWNED",
   "The IRGC says it shot down a US MQ-9 over the Strait of Hormuz, its "
@@ -106,8 +106,8 @@ FEATURES = [
   "escrow at 01:56:50 UTC for the 50 best entries.",
   "make.fun", "CONFIRMED"),
  (13, "EU", "DENMARK EXPELS RUSSIAN ATTACHE",
-  "Copenhagen expels Moscow's defence attache, out in seven days, over a "
-  "plot to kill rapper Kyivstoner near the capital.",
+  "Out in seven days, over an alleged Russian plot to kill rapper "
+  "Kyivstoner before his concert north of Copenhagen, PET says.",
   "Al Jazeera; PET", "REPORTED"),
 ]
 
@@ -117,12 +117,12 @@ FEATURES = [
 # the other features: 190x64 illustration band, full four-line summary.
 FEATURES3 = [
  (14, "ME", "HOUTHIS THREATEN JEDDAH AND RED SEA PORTS",
-  "The Houthis threaten Jeddah and Red Sea ports, in a warning reported "
-  "by Al Jazeera; it is a claim, with no attack confirmed.",
+  "Al Jazeera reports a Houthi warning to strike Jeddah and Red Sea "
+  "ports; the threat is only a claim, with no attack reported.",
   "Al Jazeera", "CLAIM"),
  (15, "ME", "IRAN KEEPS ITS 60% URANIUM",
-  "Iran keeps its 60% uranium stockpile, and the IAEA counts 440.9 kg, "
-  "Al Jazeera reports, as Tehran holds its enriched material.",
+  "The IAEA counts 440.9 kg of uranium enriched to 60%, Al Jazeera "
+  "reports, as Tehran holds its stockpile.",
   "Al Jazeera", "REPORTED"),
 ]
 
@@ -152,7 +152,7 @@ BRIEFS = [
 
 STATS = [("DAY 13", "COP31 overtime"), ("3", "missiles down over Riyadh"),
          ("6.7", "Peru quake, Junin"), ("146", "safe in Davao"),
-         ("$58,214", "Bitcoin, midday UTC"), ("136", "Rahul, Wellington")]
+         ("$58,983", "Bitcoin, early Saturday"), ("136", "Rahul, Wellington")]
 
 DATE_CHECK = ("NOT 21 NOV: Wall St correction; Kyiv bridges barrage; Poland "
               "missile; UK-EU deal; Cyclone Akvan; ICJ Myanmar ruling (all 20 "
@@ -1532,26 +1532,41 @@ def main():
     # --- 3 heroes ---
     y0 = 206
     cw = (W - 2 * M - 2 * 10) // 3
-    for i, (num, reg, head, summ, src, lab) in enumerate(HEROES):
+    for i, (num, reg, banner, head, summ, src, lab) in enumerate(HEROES):
         x = M + i * (cw + 10)
         col = REG_COL[reg]
         d.rectangle([x, y0, x + cw, y0 + 152], outline=LINE, width=1,
                     fill=CARD)
-        d.rectangle([x, y0, x + cw, y0 + 20], fill=col)
-        d.text((x + 6, y0 + 2), f"{num:02d}", font=SANS_B(13),
+        # header bar 16 px (was 20): the freed 4 px pay for the banner
+        d.rectangle([x, y0, x + cw, y0 + 16], fill=col)
+        d.text((x + 6, y0 + 1), f"{num:02d}", font=SANS_B(13),
                fill=(255, 255, 255))
-        d.text((x + cw - 6, y0 + 3), REG_NAME[reg], font=SANS_B(11),
+        d.text((x + cw - 6, y0 + 2), REG_NAME[reg], font=SANS_B(11),
                fill=(255, 255, 255), anchor="ra")
-        draw_illus_layer(img, num, x + 4, y0 + 24, cw - 8, 38, big=True)
-        lines = wrap(d, head, SERIF_B(14), cw - 10)
-        yy = y0 + 66
-        for ln in lines[:2]:
-            d.text((x + 5, yy), ln, font=SERIF_B(14), fill=INK)
-            yy += 17
-        lines = wrap(d, summ, SANS(11), cw - 10)
-        for ln in lines[:3]:
-            d.text((x + 5, yy), ln, font=SANS(11), fill=INK)
-            yy += 12
+        # illustration band stays 38 px: the scenes are composed for it
+        # (the COP31 globe needs r >= 9) and still render fully
+        draw_illus_layer(img, num, x + 4, y0 + 20, cw - 8, 38, big=True)
+        # caps banner bar, like the top 3: red bar, white bold caps
+        d.rectangle([x, y0 + 60, x + cw, y0 + 74], fill=RED)
+        d.text((x + 6, y0 + 62), banner, font=SANS_B(11),
+               fill=(255, 255, 255))
+        # sentence-case news headline, two lines
+        lines = wrap(d, head, SERIF_B(13), cw - 10)
+        if len(lines) != 2:
+            raise ValueError(f"hero {num}: headline wraps to "
+                             f"{len(lines)} lines, expected 2")
+        yy = y0 + 76
+        for ln in lines:
+            d.text((x + 5, yy), ln, font=SERIF_B(13), fill=INK)
+            yy += 14
+        # summary unchanged, three lines
+        lines = wrap(d, summ, SANS(10), cw - 10)
+        if len(lines) != 3:
+            raise ValueError(f"hero {num}: summary wraps to "
+                             f"{len(lines)} lines, expected 3")
+        for ln in lines:
+            d.text((x + 5, yy), ln, font=SANS(10), fill=INK)
+            yy += 11
         d.text((x + 5, y0 + 152 - 13), f"({src})", font=SANS(9), fill=GREY)
         label_chip(d, x + cw - 62, y0 + 152 - 14, lab)
 
